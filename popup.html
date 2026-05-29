@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The RIGHT text</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="glow-bg"></div>
+  <div class="popup-container">
+    <div class="header">
+      <div class="icon-neon">📄➡️</div>
+      <h1>The RIGHT text</h1>
+      <p class="sub">RTL alignment for AI chats</p>
+    </div>
+
+    <div class="site-card">
+      <div class="site-row">
+        <span class="label">🌐 Current site</span>
+        <span class="site-name" id="currentSite">—</span>
+      </div>
+      <div class="site-row">
+        <span class="label">⚡ Status</span>
+        <span class="status-badge" id="statusBadge">Loading...</span>
+      </div>
+      <div class="toggle-row">
+        <span>🔁 Enable RTL</span>
+        <label class="neon-switch">
+          <input type="checkbox" id="rtlToggle">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      <span>✨ Claude · ChatGPT · Gemini · DeepSeek</span>
+    </div>
+  </div>
+  <script src="popup.js"></script>
+</body>
+</html>
