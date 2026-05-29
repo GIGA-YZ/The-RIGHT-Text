@@ -2,8 +2,6 @@
 ✨🔁 The RIGHT text – RTL alignment for Claude, ChatGPT, Gemini &amp; DeepSeek. 🌙 Dark mode + neon toggle. 🚫 No data collected.
 
 
-Here are clear bullet instructions for users to install **The RIGHT text** from your GitHub repo:
-
 ---
 
 ## 📥 How to install ?
