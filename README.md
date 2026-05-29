@@ -18,4 +18,4 @@
 
 ---
 
-That’s it !. Users get the neon dark mode, RTL alignment, and full privacy.
+That’s it !. Get the neon dark mode, RTL alignment, and full privacy.
