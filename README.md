@@ -8,7 +8,7 @@ Here are clear bullet instructions for users to install **The RIGHT text** from 
 
 ## 📥 How to install ?
 
-- **Click the green **“Code”** button → **“Download ZIP”** **
+- Click the green **“Code”** button → **“Download ZIP”** 
 - **Extract the ZIP file**
 - **Open Chrome (or Brave, Edge, Vivaldi, Opera)** and type `chrome://extensions` in the address bar
 - **Enable “Developer mode”** (toggle in top‑right corner)
