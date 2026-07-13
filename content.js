@@ -1,27 +1,61 @@
-// The RIGHT text – Content Script
-// Injects RTL styles for AI chat sites
+// The RIGHT text – Content Script v2.1
+// Fixed Claude support + all others (ChatGPT, Gemini, DeepSeek, Qwen)
 
 const ACTIVE_FLAG = 'righttext-active';
 const STORAGE_PREFIX = 'righttext_';
 
-// ==========================================
-// RTL Style definitions (condensed but effective)
-// ==========================================
 const RTL_STYLES = `
-  /* Main content areas for all supported sites */
-  .righttext-active main p,
-  .righttext-active main h1, .righttext-active main h2, .righttext-active main h3,
-  .righttext-active main li, .righttext-active main blockquote,
-  .righttext-active [class*="prose"] p, .righttext-active [class*="prose"] li,
-  .righttext-active [class*="markdown"] p, .righttext-active [class*="markdown"] li,
+  /* --- Claude.ai (updated) --- */
+  .righttext-active .font-claude-response .standard-markdown p,
+  .righttext-active .font-claude-response .standard-markdown h1,
+  .righttext-active .font-claude-response .standard-markdown h2,
+  .righttext-active .font-claude-response .standard-markdown h3,
+  .righttext-active .font-claude-response .standard-markdown li,
+  .righttext-active .font-claude-response .standard-markdown blockquote,
+  /* fallback for other Claude layouts */
+  .righttext-active [class*="claude-response"] p,
+  .righttext-active [class*="claude-response"] li,
+  .righttext-active [class*="claude-message"] p,
+  .righttext-active [class*="claude-message"] li,
+
+  /* --- ChatGPT --- */
   .righttext-active [data-message-author-role="assistant"] p,
   .righttext-active [data-message-author-role="assistant"] li,
-  .righttext-active model-response p, .righttext-active model-response li,
-  .righttext-active .ds-markdown p, .righttext-active .ds-markdown li,
-  .righttext-active .ds-markdown h1, .righttext-active .ds-markdown h2, .righttext-active .ds-markdown h3,
+  .righttext-active [data-message-author-role="assistant"] h1,
+  .righttext-active [data-message-author-role="assistant"] h2,
+  .righttext-active [data-message-author-role="assistant"] h3,
+
+  /* --- Gemini --- */
+  .righttext-active model-response p,
+  .righttext-active model-response li,
+  .righttext-active [class*="response-content"] p,
+  .righttext-active [class*="response-content"] li,
+
+  /* --- DeepSeek --- */
+  .righttext-active .ds-markdown p,
+  .righttext-active .ds-markdown li,
+  .righttext-active .ds-markdown h1,
+  .righttext-active .ds-markdown h2,
+  .righttext-active .ds-markdown h3,
   .righttext-active [class*="assistant-message"] p,
+  .righttext-active [class*="assistant-message"] li,
   .righttext-active .chat-message p,
-  .righttext-active article p, .righttext-active article li {
+  .righttext-active .chat-message li,
+
+  /* --- Qwen Chat --- */
+  .righttext-active .chat-response-message .qwen-markdown-text,
+  .righttext-active .chat-response-message .qwen-markdown-paragraph,
+  .righttext-active .chat-response-message .qwen-markdown-heading,
+  .righttext-active .chat-response-message .qwen-markdown-list li,
+  .righttext-active .chat-response-message .qwen-markdown-strong,
+  .righttext-active .chat-response-message .qwen-markdown-em,
+  .righttext-active .response-message-content p,
+  .righttext-active .response-message-content li,
+
+  /* --- Universal fallback (only inside article/content) --- */
+  .righttext-active article p, .righttext-active article li,
+  .righttext-active section[class*="content"] p,
+  .righttext-active section[class*="content"] li {
     direction: rtl !important;
     text-align: right !important;
     unicode-bidi: plaintext !important;
@@ -61,11 +95,9 @@ function disableRTL() {
   document.documentElement.classList.remove(ACTIVE_FLAG);
 }
 
-// Monitor SPA navigation (for ChatGPT, DeepSeek, etc.)
 function watchHistory() {
   const pushState = history.pushState;
   const replaceState = history.replaceState;
-
   history.pushState = function(...args) {
     pushState.apply(history, args);
     onLocationChange();
@@ -85,7 +117,6 @@ function onLocationChange() {
   });
 }
 
-// Initial load
 function init() {
   const key = `${STORAGE_PREFIX}${location.hostname}`;
   chrome.storage.local.get(key, (res) => {
@@ -95,7 +126,6 @@ function init() {
   });
 }
 
-// Listen for popup commands
 chrome.runtime.onMessage.addListener((msg, sender, respond) => {
   if (msg.action === 'toggle') {
     msg.enabled ? enableRTL() : disableRTL();
